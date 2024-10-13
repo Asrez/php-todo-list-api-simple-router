@@ -7,11 +7,11 @@ namespace Controllers;
 class HomeController
 {
 
-    function index()
+    function index(): void  // Just echo something
     {
         $response = [
             "status_code" => 200,
-            "massage" => "Welcome"
+            "data" => ["massage" => "Welcome"]
         ];
 
         $response = json_encode($response);
