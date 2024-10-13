@@ -12,6 +12,8 @@ class SearchController
 
         $data = json_decode(file_get_contents(__DIR__."/../dict.json"), true);
         
+        $result = [];
+        
         if (json_last_error() === JSON_ERROR_NONE && is_array($data)){
             
             $word = strtolower($params["word"]);
