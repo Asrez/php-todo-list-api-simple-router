@@ -7,25 +7,29 @@ namespace Controllers;
 class SearchController
 {
 
-    function index($params)
+    function index(array $params): void  // Just echo something
     {
 
-        $data = json_decode(file_get_contents("/home/max/absent/api/dict.json"), true);
+        $data = json_decode(file_get_contents(__DIR__."/../dict.json"), true);
+        
+        if (json_last_error() === JSON_ERROR_NONE && is_array($data)){
+            
+            $word = strtolower($params["word"]);
 
-        $word = strtolower($params["word"]);
+            foreach ($data as $query => $translate){
 
-        $result = [];
-
-        foreach ($data as $query => $translate){
-
-            if ($query == $word){
-                $result = ["status" => 200, "data" => ["word" => $word, "translate" => $translate]];
-                break;
+                if ($query === $word){
+                    $result = ["status" => 200, "data" => ["word" => $word, "translate" => $translate]];
+                    break;
+                }
             }
+
+            if (!$result) $result = ["status" => 504, "data" => ["word" => $word, "massage" => "Word not found"]];
+
+        } else{
+            $result = ["status" => 501, "data" => ["massage" => "Internal server error"]];
         }
 
-        if (!$result) $result = ["status" => 404, "data" => ["massage" => "Word not found"]];
-
-        print_r(json_encode($result));
+        echo json_encode($result);
     }
 }
