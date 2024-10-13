@@ -8,7 +8,7 @@ class Route
     private $routes = [];
 
 
-    function add($url, $method, $controller, $action)
+    function add(string $url, string $method, string $controller, string $action): void
     {
         $regex = '/\{([\w\-_]+)\}/i';
 
@@ -24,7 +24,7 @@ class Route
 
     }
 
-    function match($requestUrl, $requestMethod)
+    function match(string $requestUrl, string $requestMethod): bool
     {
         
         foreach ($this->routes as $route){
@@ -47,7 +47,7 @@ class Route
         return false;
     }
 
-    private function callControlerAction($controller, $action, $params)
+    private function callControlerAction(string $controller, string $action, array $params): void  // Just echo something
     {
         $controllerInstance = new $controller();
 
@@ -55,12 +55,12 @@ class Route
             call_user_func_array([$controllerInstance, $action], [$params]);
         } else{
 
-            echo json_encode("Internal server error!");
+            echo json_encode(["status" => 501, "data" => ["massage" => "Internal server error"]]);
         }
     }
 
 
-    private function invalidRequest($route)
+    private function invalidRequest(string $route): void  // Just echo something
     {
         $response = [
             "error_code" => 404,
