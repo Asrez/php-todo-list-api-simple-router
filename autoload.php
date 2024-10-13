@@ -2,7 +2,7 @@
 
 
 
-function classAutoloader($className): void
+function classAutoloader(string $className): void
 {
     $baseDir = __DIR__.DIRECTORY_SEPARATOR."Controllers".DIRECTORY_SEPARATOR;
 
