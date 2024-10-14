@@ -9,13 +9,16 @@ class HomeController
 
     function index(): void  // Just echo something
     {
-        $response = [
-            "status_code" => 200,
-            "data" => ["massage" => "Welcome"]
-        ];
+        $data = json_decode(file_get_contents(__DIR__."/../dict.json"), true);
+        
+        if (json_last_error() === JSON_ERROR_NONE && is_array($data)){
 
-        $response = json_encode($response);
+            $result = ["status" => 200, "data" => $data];
 
-        echo $response;
+        } else{
+            $result = ["status" => 501, "data" => ["massage" => "Internal server error"]];
+        }
+
+        echo json_encode($result);
     }
 }
