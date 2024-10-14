@@ -1,7 +1,4 @@
 <?php
-
-
-
 function classAutoloader(string $className): void
 {
     $baseDir = __DIR__.DIRECTORY_SEPARATOR."Controllers".DIRECTORY_SEPARATOR;
@@ -14,8 +11,6 @@ function classAutoloader(string $className): void
     if (file_exists($filePath)){
         include_once($filePath);
     }
-    
 }
-
 
 spl_autoload_register("classAutoloader");
